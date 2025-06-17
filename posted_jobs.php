@@ -55,59 +55,66 @@ include "connection.php";
         
         <!-- Job List Area Start -->
         <div class="job-listing-area pt-120 pb-120">
-            
-            <div class='ml-5 mr-5'>
-                <h2 class="ml-5 mb-2">Posted Jobs</h2>
-                <hr>
-        <?php
-                                    if($_SESSION['user_type'] === 'Recruiter'){
-                                    $recruiter_id = $_SESSION['id'];
-                                    $sql = "SELECT * FROM job_post where recruiter_id = '$recruiter_id'";
-                                    }else{
-                                        $sql = "SELECT * FROM job_post";
-                                    }
-                                    $result = $conn->query($sql);
-                                    
-                                    
-                                    if ($result->num_rows > 0) {
-                                        while($row = $result->fetch_assoc()) {
-                                        
-                                        echo "<div class='single-job-items mb-30 ml-5 mr-5'>";
-                                        echo "<div class='job-items'>";
-                                        echo "<div class='company-img'>";
-                                        echo "<a href='job_details.php?id=" . $row['job_id'] . "'><img style='width:120px; height:120px;' src='/E-Recruitment system/upload/" . $row['company_logo'] . "'></a>";
-                                        echo "</div>";
-                                        echo "<div class='job-tittle job-tittle2'>";
-                                        echo "<a href='job_details.php?id=" . $row['job_id'] . "'>";
-                                        echo "<h4>" . $row['categories'] . "</h4>";
-                                        echo "</a>";
-                                        echo "<ul>";
-                                        echo "<li>" . $row['company_name'] . "</li>";
-                                        echo "<li><i class='fas fa-map-marker-alt'></i>" . $row['company_location'] .  "</li>";
-                                        echo "<li>" . $row['salary'] . "</li> <br>";
-                                        echo "<li>" . $row['requirements'] . "</li>";
-                                        echo "</ul>";
-                                        echo "</div>";
-                                        echo "</div>";
-                                        echo "<div class='items-link items-link2 f-right'>";
-                                        
-                                        echo "<a href='edit_job.php?id=" . $row['job_id'] . "'>Edit</a>";
-
-                                        echo "<a href='deactive_job.php?id=" . $row['job_id'] . "' onclick='toggleJobStatus(" . $row['job_id'] . ")'>" . ($row['status'] === 'active' ? 'Deactivate' : 'Activate') . "</a>";
-
-
-                                        echo "<a href='delete_job.php?id=" . $row['job_id'] . "'>Delete</a>";
-
-                                        echo "<span> Post date: " . $row['date'] ."</span>";
-                                        echo "</div>";
-                                        echo "</div>";
-                                        }
-                                    } else {
-                                        echo "No job posts found.";
-                                    }
-                                    $conn->close();
-                                ?>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-tittle text-center mb-50">
+                            <h2>Your Posted Jobs</h2>
+                            <p>Manage and track all your job postings in one place</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php
+                    if($_SESSION['user_type'] === 'Recruiter'){
+                        $recruiter_id = $_SESSION['id'];
+                        $sql = "SELECT * FROM job_post where recruiter_id = '$recruiter_id'";
+                    }else{
+                        $sql = "SELECT * FROM job_post";
+                    }
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                    ?>
+                    <div class="col-lg-6 col-md-12 mb-4">
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="job_details.php?id=<?php echo $row['job_id']; ?>">
+                                        <img style='width:120px; height:120px; object-fit:cover; border-radius:10px;' src='/E-Recruitment system/upload/<?php echo $row['company_logo'] ?>' alt="Company Logo">
+                                    </a>
                                 </div>
+                                <div class="job-tittle job-tittle2">
+                                    <a href="job_details.php?id=<?php echo $row['job_id']; ?>">
+                                        <h4 class="text-primary"><?php echo $row['categories'] ?></h4>
+                                    </a>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fas fa-building mr-2"></i><?php echo $row['company_name'] ?></li>
+                                        <li class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i><?php echo $row['company_location'] ?></li>
+                                        <li class="mb-2"><i class="fas fa-money-bill-wave mr-2"></i><?php echo $row['salary'] ?></li>
+                                        <li class="mb-2"><i class="fas fa-clock mr-2"></i><?php echo $row['timing'] ?></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link items-link2 f-right">
+                                <a href="edit_job.php?id=<?php echo $row['job_id'] ?>" class="btn btn-outline-primary mr-2">
+                                    <i class="fas fa-edit mr-1"></i> Edit
+                                </a>
+                                <a href="job_details.php?id=<?php echo $row['job_id'] ?>" class="btn btn-primary">
+                                    <i class="fas fa-eye mr-1"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                        }
+                    } else {
+                        echo '<div class="col-12 text-center"><div class="alert alert-info">No jobs posted yet. <a href="post_job.php" class="alert-link">Post your first job</a></div></div>';
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
 
         
