@@ -1,5 +1,6 @@
 <?php
 include "connection.php";
+require_once 'sentry-init.php';
 ?>
 
 <!doctype html>
