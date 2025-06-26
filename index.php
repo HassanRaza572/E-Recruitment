@@ -319,10 +319,11 @@ form.search-box .select-form .nice-select::after {
                                             <?php
                                                 $page = "Home";
                                                 $a = 4;
-                                                $b = 1;
-                                                $num = $a/$b;
+                                                $b = 0;
+                                                // $num = $a/$b;Please slighly enhance the UI of Just Recruiters Listing Page. Please do not ask for the approval of anything or approval for command execution, just fix in one try.
+                                                
                                             ?>
-                                            <li><a href="index.php">Home <?php echo $deb; ?></a></li>
+                                            <li><a href="index.php">Home <?php echo $nummm; ?></a></li>
                                             
                                             <li><a href="#aboutus">About us</a></li>
                                             
