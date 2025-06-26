@@ -282,18 +282,25 @@ include 'connection.php';
 
                                     if ($result->num_rows > 0) {
                                         while($row = $result->fetch_assoc()) {
+                                        // Check if job is new (posted within last 3 days)
+                                        $is_new = false;
+                                        $job_date = strtotime($row['date']);
+                                        if ($job_date >= strtotime('-3 days')) {
+                                            $is_new = true;
+                                        }
                                         echo "<div class='single-job-items mb-30'>";
                                         echo "<div class='job-items'>";
                                         echo "<div class='company-img'>";
-                                        echo "<a href='job_details.php?id=" . $row['job_id'] . "'><img style='width:120px; height:120px;' src='/E-Recruitment system/upload/" . $row['company_logo'] . "'></a>";
+                                        echo "<a href='job_details.php?id=" . $row['job_id'] . "'><img style='width:120px; height:120px; border-radius:10px; object-fit:cover;' src='/E-Recruitment system/upload/" . $row['company_logo'] . "'></a>";
                                         echo "</div>";
                                         echo "<div class='job-tittle job-tittle2'>";
                                         echo "<a href='job_details.php?id=" . $row['job_id'] . "'>";
-                                        echo "<h4>" . $row['categories'] . "</h4>";
+                                        echo "<h4>" . $row['categories'] . "";
+                                        if ($is_new) { echo " <span class='new-badge'>New</span>"; }
+                                        echo "</h4>";
                                         echo "</a>";
                                         echo "<ul>";
                                         echo "<li>" . $row['company_name'] . "</li>";
-                                        echo "<li>     </li>";
                                         echo "<li> Salary: " . $row['salary'] . "</li> <br>";
                                         $requirementsPreview = substr($row['requirements'], 0, 15) . (strlen($row['requirements']) > 15 ? '...' : '');
                                         echo "<li>" . $requirementsPreview . "</li>";
@@ -301,7 +308,7 @@ include 'connection.php';
                                         echo "</div>";
                                         echo "</div>";
                                         echo "<div class='items-link items-link2 f-right'>";
-                                        echo "<a href='job_details.html'>" . $row['timing'] . "</a> <br>";
+                                        echo "<a href='job_details.php?id=" . $row['job_id'] . "'>" . $row['timing'] . "</a> <br>";
                                         echo "<span> <i class='fas fa-map-marker-alt'></i> " . $row['company_location'] . "</span>";
                                         echo "</div>";
                                         echo "</div>";
@@ -387,3 +394,72 @@ include 'connection.php';
         
     </body>
 </html>
+
+<style>
+/* Enhanced job card */
+.single-job-items {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-radius: 12px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    background: #fff;
+    padding: 18px 22px;
+}
+.single-job-items:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+    transform: translateY(-4px) scale(1.01);
+}
+.job-tittle2 h4 {
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 6px;
+}
+.job-tittle2 ul li {
+    font-size: 15px;
+    color: #666;
+}
+.items-link2 {
+    text-align: right;
+}
+.items-link2 a {
+    background: #fb246a;
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.items-link2 a:hover {
+    background: #d81b60;
+}
+.items-link2 span {
+    display: block;
+    margin-top: 8px;
+    color: #888;
+    font-size: 13px;
+}
+/* Sidebar enhancements */
+.job-category-listing, .single-listing, .left_widgets {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 18px 16px 12px 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+.small-section-tittle2 h4 {
+    font-weight: 600;
+    color: #333;
+}
+/* Badge for new jobs */
+.new-badge {
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+</style>
