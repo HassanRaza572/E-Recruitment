@@ -318,11 +318,11 @@ form.search-box .select-form .nice-select::after {
                                         <ul id="navigation">
                                             <?php
                                                 $page = "Home";
-                                                $a = 4;
+                                                $a = 4;I have enco
                                                 $b = 1;
                                                 $num = $a/$b;
                                             ?>
-                                            <li><a href="index.php">Home <?php echo $numee; ?></a></li>
+                                            <li><a href="index.php">Home <?php echo $num; ?></a></li>
                                             
                                             <li><a href="#aboutus">About us</a></li>
                                             
