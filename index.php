@@ -322,7 +322,7 @@ form.search-box .select-form .nice-select::after {
                                                 $b = 1;
                                                 $num = $a/$b;
                                             ?>
-                                            <li><a href="index.php">Home <?php echo $numb; ?></a></li>
+                                            <li><a href="index.php">Home <?php echo $num; ?></a></li>
                                             
                                             <li><a href="#aboutus">About us</a></li>
                                             
